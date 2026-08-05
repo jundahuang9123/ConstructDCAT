@@ -1,0 +1,55 @@
+@prefix bot:     <https://w3id.org/bot#> .
+@prefix cx:      <https://w3id.org/construct-dcat#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex:      <https://example.org/construct-dcat/> .
+@prefix ifc:     <https://standards.buildingsmart.org/IFC/DEV/IFC4_3/OWL#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+# These RDF triples are catalog metadata. The distributions they describe are
+# ordinary non-RDF IFC-SPF and AAS JSON files.
+
+ex:construction-catalog
+    a dcat:Catalog ;
+    dcterms:title "Example construction data catalog"@en ;
+    dcat:dataset ex:wall-model, ex:pump-aas .
+
+ex:wall-model
+    a dcat:Dataset, cx:BIMDataset ;
+    dcterms:title "Example IFC wall model"@en ;
+    dcterms:description "DCAT metadata for a non-RDF IFC-SPF building model containing walls."@en ;
+    cx:describesAssetType ifc:IfcWall ;
+    cx:usesOntology bot: ;
+    dcat:distribution ex:wall-model-ifc .
+
+ex:wall-model-ifc
+    a dcat:Distribution ;
+    dcterms:title "IFC-SPF distribution"@en ;
+    dcterms:format "IFC-SPF" ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/model/step> ;
+    dcat:downloadURL <https://example.org/construct-dcat/data/wall-model.ifc> .
+
+ex:pump-aas
+    a dcat:Dataset, cx:AASDataset ;
+    dcterms:title "Example pump Asset Administration Shell"@en ;
+    dcterms:description "DCAT metadata for a non-RDF AAS JSON package."@en ;
+    cx:hasAASSubmodel ex:nameplate-submodel ;
+    cx:alignsWithConcept ex:maintenance-concept ;
+    dcat:distribution ex:pump-aas-json .
+
+ex:pump-aas-json
+    a dcat:Distribution ;
+    dcterms:title "AAS JSON distribution"@en ;
+    dcterms:format "Asset Administration Shell JSON" ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/application/json> ;
+    dcat:downloadURL <https://example.org/construct-dcat/data/pump-aas.json> .
+
+# This project-local example IRI deliberately avoids claiming an official AAS
+# RDF namespace or canonical RDF class for Submodel.
+ex:nameplate-submodel
+    dcterms:title "Example nameplate submodel descriptor"@en ;
+    dcterms:description "An illustrative discovery anchor, not an official AAS RDF term."@en .
+
+ex:maintenance-concept
+    a skos:Concept ;
+    skos:prefLabel "Maintenance information"@en .

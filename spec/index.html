@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Construct-DCAT 0.1.0 vocabulary specification">
+  <title>Construct-DCAT 0.1.0</title>
+  <script class="remove">
+    var respecConfig = {
+      specStatus: "base",
+      shortName: "construct-dcat",
+      subtitle: "Version 0.1.0 — Initial conceptual release",
+      publishDate: "2026-08-05",
+      editors: [{
+        name: "Junda Huang",
+        url: "https://orcid.org/0000-0002-1246-5759",
+        company: "University of Wuppertal",
+        companyURL: "https://www.uni-wuppertal.de/"
+      }],
+      github: {
+        repoURL: "https://github.com/jundahuang9123/ConstructDCAT",
+        branch: "main"
+      },
+      edDraftURI: null,
+      latestVersion: "https://jundahuang9123.github.io/ConstructDCAT/",
+      addSectionLinks: true,
+      maxTocLevel: 3,
+      otherLinks: [
+        {
+          key: "This version",
+          data: [{
+            value: "0.1.0",
+            href: "https://jundahuang9123.github.io/ConstructDCAT/releases/0.1.0/"
+          }]
+        },
+        {
+          key: "Vocabulary IRI",
+          data: [{
+            value: "https://w3id.org/construct-dcat",
+            href: "https://w3id.org/construct-dcat"
+          }]
+        },
+        {
+          key: "Namespace",
+          data: [{
+            value: "https://w3id.org/construct-dcat#",
+            href: "https://w3id.org/construct-dcat#"
+          }]
+        },
+        {
+          key: "Contact",
+          data: [{
+            value: "huang@uni-wuppertal.de",
+            href: "mailto:huang@uni-wuppertal.de"
+          }]
+        },
+        {
+          key: "Serializations",
+          data: [
+            {
+              value: "Turtle",
+              href: "https://jundahuang9123.github.io/ConstructDCAT/construct-dcat.ttl"
+            },
+            {
+              value: "JSON-LD",
+              href: "https://jundahuang9123.github.io/ConstructDCAT/construct-dcat.jsonld"
+            }
+          ]
+        }
+      ]
+    };
+  </script>
+  <script class="remove" src="https://www.w3.org/Tools/respec/respec-w3c"></script>
+  <style>
+    :root {
+      --cx-accent: #005a9c;
+      --cx-accent-dark: #003f6f;
+      --cx-soft: #eef7fc;
+      --cx-border: #b7c9d6;
+      --cx-muted: #4b5963;
+      --cx-open: #fff8e6;
+    }
+
+    body {
+      line-height: 1.55;
+    }
+
+    a {
+      text-decoration-thickness: .08em;
+      text-underline-offset: .12em;
+    }
+
+    a:focus-visible,
+    [tabindex="0"]:focus-visible {
+      outline: 3px solid var(--cx-accent-dark);
+      outline-offset: 3px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+    }
+
+    pre {
+      overflow-x: auto;
+      border-left: .35rem solid var(--cx-accent);
+    }
+
+    .advisement,
+    .note {
+      border-left-color: var(--cx-accent);
+    }
+
+    .status-banner {
+      padding: 1rem 1.15rem;
+      border: 1px solid var(--cx-border);
+      border-left: .4rem solid var(--cx-accent);
+      border-radius: .25rem;
+      background: var(--cx-soft);
+    }
+
+    .term-index {
+      overflow-x: auto;
+      border: 1px solid var(--cx-border);
+      border-radius: .3rem;
+    }
+
+    .term-index table {
+      margin: 0;
+      width: 100%;
+      min-width: 48rem;
+      border: 0;
+    }
+
+    .term-index caption {
+      padding: .75rem;
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .term-index th,
+    .term-index td {
+      vertical-align: top;
+    }
+
+    .term-card {
+      margin: 1.5rem 0;
+      padding: 1rem 1.2rem;
+      border: 1px solid var(--cx-border);
+      border-radius: .35rem;
+      background: #fff;
+    }
+
+    .term-card h3 {
+      margin-top: 0;
+    }
+
+    .term-card dl {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      gap: .35rem 1rem;
+      margin-bottom: 0;
+    }
+
+    .term-card dt {
+      font-weight: 700;
+    }
+
+    .term-card dd {
+      margin: 0;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .vocab-diagram {
+      display: block;
+      width: 100%;
+      min-width: 48rem;
+      height: auto;
+      border: 1px solid var(--cx-border);
+      border-radius: .35rem;
+      background: #fff;
+    }
+
+    .diagram-scroll {
+      overflow-x: auto;
+      border-radius: .35rem;
+    }
+
+    .vocab-diagram .box {
+      fill: var(--cx-soft);
+      stroke: var(--cx-accent-dark);
+      stroke-width: 2;
+    }
+
+    .vocab-diagram .open-box {
+      fill: var(--cx-open);
+      stroke: #8a6100;
+      stroke-width: 2;
+      stroke-dasharray: 8 5;
+    }
+
+    .vocab-diagram .edge {
+      fill: none;
+      stroke: #263238;
+      stroke-width: 2;
+    }
+
+    .vocab-diagram .label {
+      fill: #17222a;
+      font: 18px system-ui, sans-serif;
+      text-anchor: middle;
+    }
+
+    .vocab-diagram .edge-label {
+      fill: #34454f;
+      font: 16px system-ui, sans-serif;
+      text-anchor: middle;
+    }
+
+    .vocab-diagram .heading {
+      fill: var(--cx-accent-dark);
+      font: 700 20px system-ui, sans-serif;
+    }
+
+    figcaption {
+      color: var(--cx-muted);
+      font-size: .94rem;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: 1rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .resource-grid li {
+      padding: 1rem;
+      border: 1px solid var(--cx-border);
+      border-radius: .35rem;
+    }
+
+    @media (max-width: 40rem) {
+      .term-card dl {
+        display: block;
+      }
+
+      .term-card dd {
+        margin: 0 0 .65rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <p class="copyright">
+    Copyright © 2026 Junda Huang. This work is licensed under the
+    <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+  </p>
+
+  <section id="abstract">
+    <p>
+      Construct-DCAT is a lightweight RDF vocabulary for adding
+      representation-independent semantic anchors to DCAT catalog records for
+      heterogeneous construction datasets. The catalog metadata is RDF, while
+      the data it describes may be IFC, Asset Administration Shell (AAS) JSON,
+      tabular, geospatial, sensor, document, RDF, or another representation.
+    </p>
+  </section>
+
+  <section id="sotd" class="override">
+    <h2>Status of This Document</h2>
+    <p class="status-banner">
+      <strong>Construct-DCAT 0.1.0 is an initial conceptual release.</strong>
+      It is intentionally small and is not a complete DCAT-AP application
+      profile. This document defines vocabulary terms, not a conformance regime.
+    </p>
+    <p>
+      This release defines no required properties, cardinalities, SHACL shapes,
+      catalog instance-data validation rules, conformance classes, or closed
+      lists of permitted values. The examples are informative. The authoritative
+      machine-readable term declarations are the RDF serializations published
+      with this document.
+    </p>
+    <p>
+      Feedback and implementation experience are welcome through the
+      <a href="https://github.com/jundahuang9123/ConstructDCAT/issues">GitHub issue tracker</a>.
+    </p>
+    <p class="note">
+      At the time of this release, resolution of the canonical W3ID is pending
+      review in <a href="https://github.com/perma-id/w3id.org/pull/6492">perma-id/w3id.org pull request 6492</a>.
+      The GitHub Pages documentation and serializations are available independently;
+      the canonical vocabulary IRIs remain unchanged.
+    </p>
+  </section>
+
+  <section id="introduction">
+    <h2>Introduction</h2>
+
+    <section id="motivation">
+      <h3>Motivation</h3>
+      <p>
+        Construction catalogs routinely describe datasets stored in unrelated
+        technical representations. A single catalog can include an IFC model,
+        an AAS package, sensor exports, geospatial files, documents, and RDF.
+        DCAT provides the common catalog model; Construct-DCAT adds a compact set
+        of discovery anchors that say what construction entities a dataset
+        describes and which semantic resources it uses.
+      </p>
+    </section>
+
+    <section id="scope">
+      <h3>Scope and design</h3>
+      <p>
+        Construct-DCAT extends descriptions of <code>dcat:Dataset</code> records.
+        Its anchors are representation independent: property values are intended
+        to be IRIs that identify semantic anchors, but the cataloged distributions
+        do not need to be RDF. The two dataset classes in this release are useful
+        starting points rather than an exhaustive construction dataset taxonomy.
+      </p>
+      <p>
+        Version 0.1.0 deliberately avoids narrow alignments and a closed list of
+        external vocabularies. It asserts no <code>rdfs:subPropertyOf</code>
+        relationships to DCAT or Dublin Core terms.
+      </p>
+    </section>
+
+    <section id="non-goals">
+      <h3>Non-goals</h3>
+      <p>This release does not:</p>
+      <ul>
+        <li>replace DCAT or DCAT-AP catalog metadata;</li>
+        <li>define a complete DCAT-AP application profile;</li>
+        <li>prescribe how IFC, AAS, or other distribution formats are modeled internally; or</li>
+        <li>provide instance-validation constraints.</li>
+      </ul>
+    </section>
+  </section>
+
+  <section id="conventions">
+    <h2>Namespace and conventions</h2>
+    <dl>
+      <dt>Vocabulary IRI</dt>
+      <dd><a href="https://w3id.org/construct-dcat"><code>https://w3id.org/construct-dcat</code></a></dd>
+      <dt>Namespace</dt>
+      <dd><code>https://w3id.org/construct-dcat#</code></dd>
+      <dt>Preferred prefix</dt>
+      <dd><code>cx:</code></dd>
+      <dt>Version</dt>
+      <dd><code>0.1.0</code></dd>
+    </dl>
+    <pre class="nohighlight" tabindex="0" aria-label="Common RDF prefixes"><code>@prefix cx:      &lt;https://w3id.org/construct-dcat#&gt; .
+@prefix dcat:    &lt;http://www.w3.org/ns/dcat#&gt; .
+@prefix rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix skos:    &lt;http://www.w3.org/2004/02/skos/core#&gt; .</code></pre>
+    <div class="note">
+      <p>
+        RDFS domain and range declarations support inference; they are not
+        validation constraints. An absent range means that this vocabulary
+        asserts no formal range for that property. It does not mean that values
+        are literals, unrestricted strings, or invalid.
+      </p>
+    </div>
+  </section>
+
+  <section id="overview">
+    <h2>Vocabulary overview</h2>
+    <figure id="vocabulary-diagram">
+      <div class="diagram-scroll" tabindex="0" role="region" aria-label="Scrollable Construct-DCAT vocabulary diagram">
+      <svg class="vocab-diagram" viewBox="0 0 1000 620" role="img" aria-labelledby="diagram-title diagram-description">
+        <title id="diagram-title">Construct-DCAT vocabulary overview</title>
+        <desc id="diagram-description">AASDataset and BIMDataset are subclasses of DCAT Dataset. Four object properties have DCAT Dataset as their declared domain. describesAssetType has range RDFS Class and alignsWithConcept has range SKOS Concept. usesOntology is intended for ontologies, vocabularies, or semantic resources but has no formal range. hasAASSubmodel is intended for AAS submodels or descriptors but has no formal range.</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#263238"></path>
+          </marker>
+          <marker id="subclass" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+            <path d="M 1 1 L 11 6 L 1 11 z" fill="#fff" stroke="#263238" stroke-width="1.5"></path>
+          </marker>
+        </defs>
+
+        <text class="heading" x="42" y="34">Class hierarchy</text>
+        <rect class="box" x="370" y="48" width="260" height="62" rx="8"></rect>
+        <text class="label" x="500" y="86">dcat:Dataset</text>
+        <rect class="box" x="85" y="180" width="270" height="62" rx="8"></rect>
+        <text class="label" x="220" y="218">cx:AASDataset</text>
+        <rect class="box" x="645" y="180" width="270" height="62" rx="8"></rect>
+        <text class="label" x="780" y="218">cx:BIMDataset</text>
+        <path class="edge" d="M 220 180 L 425 110" marker-end="url(#subclass)"></path>
+        <path class="edge" d="M 780 180 L 575 110" marker-end="url(#subclass)"></path>
+        <text class="edge-label" x="300" y="135">rdfs:subClassOf</text>
+        <text class="edge-label" x="700" y="135">rdfs:subClassOf</text>
+
+        <text class="heading" x="42" y="292">Property domains and ranges</text>
+        <rect class="box" x="50" y="401" width="240" height="70" rx="8"></rect>
+        <text class="label" x="170" y="442">dcat:Dataset</text>
+
+        <rect class="box" x="705" y="292" width="245" height="54" rx="8"></rect>
+        <text class="label" x="827" y="326">rdfs:Class</text>
+        <path class="edge" d="M 290 415 L 705 319" marker-end="url(#arrow)"></path>
+        <text class="edge-label" x="485" y="346">cx:describesAssetType</text>
+
+        <rect class="open-box" x="705" y="360" width="245" height="66" rx="8"></rect>
+        <text class="label" x="827" y="382">Ontology, vocabulary,</text>
+        <text class="label" x="827" y="401">or semantic resource</text>
+        <text class="edge-label" x="827" y="419">No formal rdfs:range</text>
+        <path class="edge" d="M 290 426 L 705 393" marker-end="url(#arrow)"></path>
+        <text class="edge-label" x="488" y="396">cx:usesOntology</text>
+
+        <rect class="box" x="705" y="440" width="245" height="54" rx="8"></rect>
+        <text class="label" x="827" y="474">skos:Concept</text>
+        <path class="edge" d="M 290 446 L 705 467" marker-end="url(#arrow)"></path>
+        <text class="edge-label" x="500" y="474">cx:alignsWithConcept</text>
+
+        <rect class="open-box" x="705" y="508" width="245" height="66" rx="8"></rect>
+        <text class="label" x="827" y="530">AAS submodel or</text>
+        <text class="label" x="827" y="549">descriptor</text>
+        <text class="edge-label" x="827" y="567">No formal rdfs:range</text>
+        <path class="edge" d="M 290 458 L 705 541" marker-end="url(#arrow)"></path>
+        <text class="edge-label" x="500" y="528">cx:hasAASSubmodel</text>
+
+        <text class="edge-label" x="828" y="591">Dashed target = no formal range asserted</text>
+      </svg>
+      </div>
+      <figcaption>
+        The diagram summarizes the vocabulary declarations. It does not express
+        required properties, cardinalities, or SHACL constraints. RDFS domain and
+        range statements enable inference rather than instance validation.
+      </figcaption>
+    </figure>
+
+    <div class="term-index" tabindex="0" role="region" aria-label="Construct-DCAT term summary">
+      <table>
+        <caption>Construct-DCAT 0.1.0 term summary</caption>
+        <thead>
+          <tr>
+            <th scope="col">Term</th>
+            <th scope="col">Kind</th>
+            <th scope="col">Domain or parent</th>
+            <th scope="col">Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><a href="#AASDataset"><code>cx:AASDataset</code></a></th>
+            <td>Class</td>
+            <td>Subclass of <code>dcat:Dataset</code></td>
+            <td>Not applicable</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#BIMDataset"><code>cx:BIMDataset</code></a></th>
+            <td>Class</td>
+            <td>Subclass of <code>dcat:Dataset</code></td>
+            <td>Not applicable</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#describesAssetType"><code>cx:describesAssetType</code></a></th>
+            <td>Object property</td>
+            <td><code>dcat:Dataset</code></td>
+            <td><code>rdfs:Class</code></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#usesOntology"><code>cx:usesOntology</code></a></th>
+            <td>Object property</td>
+            <td><code>dcat:Dataset</code></td>
+            <td>No formal range asserted</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#alignsWithConcept"><code>cx:alignsWithConcept</code></a></th>
+            <td>Object property</td>
+            <td><code>dcat:Dataset</code></td>
+            <td><code>skos:Concept</code></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#hasAASSubmodel"><code>cx:hasAASSubmodel</code></a></th>
+            <td>Object property</td>
+            <td><code>dcat:Dataset</code></td>
+            <td>No formal range asserted</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="vocabulary-terms">
+    <h2>Vocabulary terms</h2>
+
+    <section id="classes">
+      <h3>Classes</h3>
+
+      <section class="term-card" id="AASDataset">
+        <h4><code>cx:AASDataset</code></h4>
+        <dl>
+          <dt>IRI</dt>
+          <dd><a href="https://w3id.org/construct-dcat#AASDataset"><code>https://w3id.org/construct-dcat#AASDataset</code></a></dd>
+          <dt>Type</dt>
+          <dd><code>owl:Class</code></dd>
+          <dt>Subclass of</dt>
+          <dd><code>dcat:Dataset</code></dd>
+          <dt>Label</dt>
+          <dd>AAS dataset</dd>
+          <dt>Definition</dt>
+          <dd>A cataloged dataset whose content is represented by, or organized around, one or more Asset Administration Shells.</dd>
+        </dl>
+      </section>
+
+      <section class="term-card" id="BIMDataset">
+        <h4><code>cx:BIMDataset</code></h4>
+        <dl>
+          <dt>IRI</dt>
+          <dd><a href="https://w3id.org/construct-dcat#BIMDataset"><code>https://w3id.org/construct-dcat#BIMDataset</code></a></dd>
+          <dt>Type</dt>
+          <dd><code>owl:Class</code></dd>
+          <dt>Subclass of</dt>
+          <dd><code>dcat:Dataset</code></dd>
+          <dt>Label</dt>
+          <dd>BIM dataset</dd>
+          <dt>Definition</dt>
+          <dd>A cataloged dataset containing building information modeling data.</dd>
+        </dl>
+      </section>
+    </section>
+
+    <section id="properties">
+      <h3>Object properties</h3>
+
+      <section class="term-card" id="describesAssetType">
+        <h4><code>cx:describesAssetType</code></h4>
+        <dl>
+          <dt>IRI</dt>
+          <dd><a href="https://w3id.org/construct-dcat#describesAssetType"><code>https://w3id.org/construct-dcat#describesAssetType</code></a></dd>
+          <dt>Type</dt>
+          <dd><code>owl:ObjectProperty</code></dd>
+          <dt>Domain</dt>
+          <dd><code>dcat:Dataset</code></dd>
+          <dt>Range</dt>
+          <dd><code>rdfs:Class</code></dd>
+          <dt>Label</dt>
+          <dd>describes asset type</dd>
+          <dt>Definition</dt>
+          <dd>Relates a dataset to the physical asset or building-element type that it describes.</dd>
+        </dl>
+      </section>
+
+      <section class="term-card" id="usesOntology">
+        <h4><code>cx:usesOntology</code></h4>
+        <dl>
+          <dt>IRI</dt>
+          <dd><a href="https://w3id.org/construct-dcat#usesOntology"><code>https://w3id.org/construct-dcat#usesOntology</code></a></dd>
+          <dt>Type</dt>
+          <dd><code>owl:ObjectProperty</code></dd>
+          <dt>Domain</dt>
+          <dd><code>dcat:Dataset</code></dd>
+          <dt>Range</dt>
+          <dd>No formal range asserted</dd>
+          <dt>Label</dt>
+          <dd>uses ontology</dd>
+          <dt>Definition</dt>
+          <dd>Relates a dataset to an ontology, vocabulary, or semantic resource that it uses or references.</dd>
+          <dt>Comment</dt>
+          <dd>Values may identify OWL ontologies, SKOS concept schemes, or other resolvable semantic resources; no narrow formal range is imposed.</dd>
+        </dl>
+      </section>
+
+      <section class="term-card" id="alignsWithConcept">
+        <h4><code>cx:alignsWithConcept</code></h4>
+        <dl>
+          <dt>IRI</dt>
+          <dd><a href="https://w3id.org/construct-dcat#alignsWithConcept"><code>https://w3id.org/construct-dcat#alignsWithConcept</code></a></dd>
+          <dt>Type</dt>
+          <dd><code>owl:ObjectProperty</code></dd>
+          <dt>Domain</dt>
+          <dd><code>dcat:Dataset</code></dd>
+          <dt>Range</dt>
+          <dd><code>skos:Concept</code></dd>
+          <dt>Label</dt>
+          <dd>aligns with concept</dd>
+          <dt>Definition</dt>
+          <dd>Relates a dataset to a controlled concept used to classify or semantically align it.</dd>
+        </dl>
+      </section>
+
+      <section class="term-card" id="hasAASSubmodel">
+        <h4><code>cx:hasAASSubmodel</code></h4>
+        <dl>
+          <dt>IRI</dt>
+          <dd><a href="https://w3id.org/construct-dcat#hasAASSubmodel"><code>https://w3id.org/construct-dcat#hasAASSubmodel</code></a></dd>
+          <dt>Type</dt>
+          <dd><code>owl:ObjectProperty</code></dd>
+          <dt>Domain</dt>
+          <dd><code>dcat:Dataset</code></dd>
+          <dt>Range</dt>
+          <dd>No formal range asserted</dd>
+          <dt>Label</dt>
+          <dd>has AAS submodel</dd>
+          <dt>Definition</dt>
+          <dd>Relates a dataset to an AAS submodel or submodel descriptor exposed as a catalog-level discovery anchor.</dd>
+          <dt>Comment</dt>
+          <dd>No formal range is asserted until a stable canonical RDF class IRI for an AAS Submodel is selected.</dd>
+        </dl>
+      </section>
+    </section>
+  </section>
+
+  <section id="examples" class="informative">
+    <h2>Usage examples</h2>
+    <p>
+      The following catalog metadata describes two datasets whose distributions
+      remain ordinary non-RDF files. The IRIs identify semantic anchors at catalog
+      level; they do not convert the distributions into RDF.
+    </p>
+
+    <section id="bim-example">
+      <h3>BIM dataset</h3>
+      <pre class="nohighlight" tabindex="0" aria-label="Turtle example for a BIM dataset"><code>@prefix bot:     &lt;https://w3id.org/bot#&gt; .
+@prefix cx:      &lt;https://w3id.org/construct-dcat#&gt; .
+@prefix dcat:    &lt;http://www.w3.org/ns/dcat#&gt; .
+@prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
+@prefix ex:      &lt;https://example.org/construct-dcat/&gt; .
+@prefix ifc:     &lt;https://standards.buildingsmart.org/IFC/DEV/IFC4_3/OWL#&gt; .
+
+ex:wall-model
+    a dcat:Dataset, cx:BIMDataset ;
+    dcterms:title "Example IFC wall model"@en ;
+    cx:describesAssetType ifc:IfcWall ;
+    cx:usesOntology bot: ;
+    dcat:distribution ex:wall-model-ifc .
+
+ex:wall-model-ifc
+    a dcat:Distribution ;
+    dcterms:format "IFC-SPF" ;
+    dcat:downloadURL &lt;https://example.org/construct-dcat/data/wall-model.ifc&gt; .</code></pre>
+    </section>
+
+    <section id="aas-example">
+      <h3>AAS dataset</h3>
+      <pre class="nohighlight" tabindex="0" aria-label="Turtle example for an AAS dataset"><code>@prefix cx:      &lt;https://w3id.org/construct-dcat#&gt; .
+@prefix dcat:    &lt;http://www.w3.org/ns/dcat#&gt; .
+@prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
+@prefix ex:      &lt;https://example.org/construct-dcat/&gt; .
+@prefix skos:    &lt;http://www.w3.org/2004/02/skos/core#&gt; .
+
+ex:pump-aas
+    a dcat:Dataset, cx:AASDataset ;
+    dcterms:title "Example pump Asset Administration Shell"@en ;
+    cx:hasAASSubmodel ex:nameplate-submodel ;
+    cx:alignsWithConcept ex:maintenance-concept ;
+    dcat:distribution ex:pump-aas-json .
+
+ex:pump-aas-json
+    a dcat:Distribution ;
+    dcterms:format "Asset Administration Shell JSON" ;
+    dcat:mediaType &lt;https://www.iana.org/assignments/media-types/application/json&gt; ;
+    dcat:downloadURL &lt;https://example.org/construct-dcat/data/pump-aas.json&gt; .
+
+# This project-local IRI deliberately avoids claiming an official AAS RDF
+# namespace or canonical RDF class for Submodel.
+ex:nameplate-submodel
+    dcterms:title "Example nameplate submodel descriptor"@en ;
+    dcterms:description "An illustrative discovery anchor, not an official AAS RDF term."@en .
+
+ex:maintenance-concept
+    a skos:Concept ;
+    skos:prefLabel "Maintenance information"@en .</code></pre>
+      <p>
+        The project-local submodel IRI is illustrative. It deliberately avoids
+        claiming that an official AAS RDF namespace or canonical RDF class for
+        Submodel has been selected. See the
+        <a href="https://jundahuang9123.github.io/ConstructDCAT/releases/0.1.0/examples/example-catalog.ttl">complete example catalog</a>.
+      </p>
+    </section>
+
+    <section id="discovery-query">
+      <h3>Discovery query</h3>
+      <p>
+        This SPARQL query finds datasets that describe IFC walls and reference
+        the Building Topology Ontology. The zero-or-more path operator in
+        <code>rdfs:subClassOf*</code> also matches <code>ifc:IfcWall</code> itself.
+      </p>
+      <pre class="nohighlight" tabindex="0" aria-label="SPARQL discovery query"><code>PREFIX cx:   &lt;https://w3id.org/construct-dcat#&gt;
+PREFIX dcat: &lt;http://www.w3.org/ns/dcat#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX ifc:  &lt;https://standards.buildingsmart.org/IFC/DEV/IFC4_3/OWL#&gt;
+PREFIX bot:  &lt;https://w3id.org/bot#&gt;
+
+SELECT ?dataset ?assetType
+WHERE {
+  ?dataset a dcat:Dataset ;
+           cx:describesAssetType ?assetType ;
+           cx:usesOntology bot: .
+
+  ?assetType rdfs:subClassOf* ifc:IfcWall .
+}</code></pre>
+    </section>
+  </section>
+
+  <section id="relationships">
+    <h2>Relationship to other vocabularies</h2>
+
+    <section id="dcat-relationship">
+      <h3>DCAT and DCAT-AP</h3>
+      <p>
+        Construct-DCAT is designed for use on DCAT dataset records. Both classes
+        are subclasses of <code>dcat:Dataset</code>, and every property has
+        <code>dcat:Dataset</code> as its declared domain. DCAT remains responsible
+        for general catalog metadata such as titles, distributions, access URLs,
+        media types, and licenses.
+      </p>
+      <p>
+        A DCAT-AP catalog may also use Construct-DCAT terms, but this release does
+        not itself define DCAT-AP obligations, cardinalities, or validation rules.
+      </p>
+    </section>
+
+    <section id="void-relationship">
+      <h3>VoID</h3>
+      <p>
+        VoID can describe vocabularies, classes, properties, and partitions that
+        occur within RDF datasets. Construct-DCAT instead exposes
+        representation-independent semantic anchors on DCAT catalog records,
+        including records for non-RDF datasets. An RDF dataset may use both
+        vocabularies together; their roles are complementary.
+      </p>
+    </section>
+  </section>
+
+  <section id="resources">
+    <h2>Serializations and resources</h2>
+    <ul class="resource-grid">
+      <li>
+        <strong>Version 0.1.0 Turtle</strong><br>
+        <a href="https://jundahuang9123.github.io/ConstructDCAT/releases/0.1.0/construct-dcat.ttl">Download the versioned Turtle serialization</a>
+      </li>
+      <li>
+        <strong>Version 0.1.0 JSON-LD</strong><br>
+        <a href="https://jundahuang9123.github.io/ConstructDCAT/releases/0.1.0/construct-dcat.jsonld">Download the versioned JSON-LD serialization</a>
+      </li>
+      <li>
+        <strong>Complete example</strong><br>
+        <a href="https://jundahuang9123.github.io/ConstructDCAT/releases/0.1.0/examples/example-catalog.ttl">View the release example catalog in Turtle</a>
+      </li>
+      <li>
+        <strong>Discovery query</strong><br>
+        <a href="https://jundahuang9123.github.io/ConstructDCAT/releases/0.1.0/queries/wall-bot.rq">View the release SPARQL query</a>
+      </li>
+      <li>
+        <strong>Source repository</strong><br>
+        <a href="https://github.com/jundahuang9123/ConstructDCAT">Browse Construct-DCAT on GitHub</a>
+      </li>
+      <li>
+        <strong>Issue tracker</strong><br>
+        <a href="https://github.com/jundahuang9123/ConstructDCAT/issues">Report an issue or propose a term</a>
+      </li>
+    </ul>
+  </section>
+
+  <section id="validation">
+    <h2>Repository validation</h2>
+    <p>
+      The repository validator parses the Turtle and JSON-LD serializations,
+      checks that they are RDF-isomorphic, verifies the declared six-term model,
+      and parses and executes the example SPARQL query. It also checks that the
+      published specification snapshots and RDF copies remain synchronized.
+    </p>
+    <p class="note">
+      These checks protect the integrity of the published artifacts. They are not
+      an instance-conformance test for catalogs that use Construct-DCAT.
+    </p>
+  </section>
+
+  <section id="version-history">
+    <h2>Version history</h2>
+    <table>
+      <caption>Construct-DCAT release history</caption>
+      <thead>
+        <tr>
+          <th scope="col">Version</th>
+          <th scope="col">Date</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://jundahuang9123.github.io/ConstructDCAT/releases/0.1.0/">0.1.0</a></td>
+          <td>2026-08-05</td>
+          <td>Initial conceptual release with two dataset classes and four object properties.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="license">
+    <h2>License and citation</h2>
+    <p>
+      Construct-DCAT is licensed under the
+      <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+      Citation metadata is available in the repository's
+      <a href="https://jundahuang9123.github.io/ConstructDCAT/releases/0.1.0/CITATION.cff"><code>CITATION.cff</code></a> file.
+    </p>
+  </section>
+
+  <section id="references" class="appendix">
+    <h2>References</h2>
+    <ul>
+      <li><a href="https://www.w3.org/TR/vocab-dcat-3/">Data Catalog Vocabulary (DCAT) — Version 3</a></li>
+      <li><a href="https://semiceu.github.io/DCAT-AP/releases/3.0.1/">DCAT Application Profile for data portals in Europe (DCAT-AP)</a></li>
+      <li><a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1 Concepts and Abstract Syntax</a></li>
+      <li><a href="https://www.w3.org/TR/rdf-schema/">RDF 1.1 Schema</a></li>
+      <li><a href="https://www.w3.org/TR/owl2-overview/">OWL 2 Web Ontology Language Document Overview</a></li>
+      <li><a href="https://www.w3.org/TR/skos-reference/">SKOS Simple Knowledge Organization System Reference</a></li>
+      <li><a href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/">DCMI Metadata Terms</a></li>
+      <li><a href="https://www.w3.org/TR/void/">Describing Linked Datasets with the VoID Vocabulary</a></li>
+      <li><a href="https://w3c-lbd-cg.github.io/bot/">Building Topology Ontology (BOT)</a></li>
+    </ul>
+  </section>
+</body>
+</html>

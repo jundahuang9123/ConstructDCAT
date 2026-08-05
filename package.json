@@ -1,0 +1,16 @@
+{
+  "name": "construct-dcat",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "description": "Source and publication tooling for the Construct-DCAT vocabulary specification.",
+  "scripts": {
+    "docs:build": "respec --src spec/index.html --out docs/releases/0.1.0/index.html --use-local --localhost --timeout 120 --haltonerror --haltonwarn --disable-sandbox && node scripts/sync-docs.mjs"
+  },
+  "devDependencies": {
+    "respec": "37.2.0"
+  }
+}

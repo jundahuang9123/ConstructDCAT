@@ -10,6 +10,24 @@ Construct-DCAT is a lightweight RDF vocabulary for adding representation-indepen
 - Version: `0.1.0`
 - Status: initial conceptual release
 
+## Documentation
+
+The full, navigable vocabulary specification is published at
+[jundahuang9123.github.io/ConstructDCAT](https://jundahuang9123.github.io/ConstructDCAT/).
+Stable publication paths are also available for the
+[0.1.0 release](https://jundahuang9123.github.io/ConstructDCAT/releases/0.1.0/)
+and the [latest release](https://jundahuang9123.github.io/ConstructDCAT/releases/latest/).
+
+The authoring source is `spec/index.html`. ReSpec generates a frozen static
+snapshot, so visitors do not need JavaScript or a live ReSpec dependency. To
+rebuild and synchronize the root, latest, and versioned copies, use Node.js 24
+or later and pnpm 11.9.0:
+
+```bash
+pnpm install
+pnpm docs:build
+```
+
 ## Scope
 
 Construct-DCAT extends descriptions of `dcat:Dataset` records with a small set of construction-oriented discovery anchors. It can be used in DCAT and DCAT-AP catalogs, but version 0.1.0 is not a complete DCAT-AP profile and defines no SHACL constraints. `cx:AASDataset` and `cx:BIMDataset` are initial examples, not an exhaustive dataset taxonomy.
@@ -77,7 +95,7 @@ python -m pip install -r requirements.txt
 python scripts/validate.py
 ```
 
-The validator parses both vocabulary serializations and their GitHub Pages copies, checks the six-term model, confirms the serializations are RDF-isomorphic, and parses and executes the SPARQL query. The copies under `docs/` let the W3ID content-negotiation targets return RDF-specific media types; the canonical editable sources remain the repository-root files.
+The validator parses both vocabulary serializations and every GitHub Pages copy, checks the six-term model, confirms the serializations are RDF-isomorphic, verifies the static documentation snapshots and stable term fragments, and parses and executes the SPARQL query. The copies under `docs/` let the W3ID content-negotiation targets return RDF-specific media types; the canonical editable RDF sources remain the repository-root files.
 
 ## License and maintainer
 

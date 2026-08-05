@@ -1,0 +1,58 @@
+@prefix cx:      <https://w3id.org/construct-dcat#> .
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/construct-dcat>
+    a owl:Ontology ;
+    dcterms:title "Construct-DCAT"@en ;
+    dcterms:description "A lightweight vocabulary for representation-independent semantic anchors on DCAT catalog records for heterogeneous construction datasets."@en ;
+    dcterms:creator <https://orcid.org/0000-0002-1246-5759> ;
+    dcterms:created "2026-08-05"^^xsd:date ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "0.1.0" ;
+    rdfs:seeAlso <https://github.com/jundahuang9123/ConstructDCAT> ;
+    rdfs:comment "Initial conceptual release; the vocabulary is intentionally small and is not a complete DCAT-AP profile."@en .
+
+cx:AASDataset
+    a owl:Class ;
+    rdfs:subClassOf dcat:Dataset ;
+    rdfs:label "AAS dataset"@en ;
+    skos:definition "A cataloged dataset whose content is represented by, or organized around, one or more Asset Administration Shells."@en .
+
+cx:BIMDataset
+    a owl:Class ;
+    rdfs:subClassOf dcat:Dataset ;
+    rdfs:label "BIM dataset"@en ;
+    skos:definition "A cataloged dataset containing building information modeling data."@en .
+
+cx:describesAssetType
+    a owl:ObjectProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range rdfs:Class ;
+    rdfs:label "describes asset type"@en ;
+    skos:definition "Relates a dataset to the physical asset or building-element type that it describes."@en .
+
+cx:usesOntology
+    a owl:ObjectProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:label "uses ontology"@en ;
+    skos:definition "Relates a dataset to an ontology, vocabulary, or semantic resource that it uses or references."@en ;
+    rdfs:comment "Values may identify OWL ontologies, SKOS concept schemes, or other resolvable semantic resources; no narrow formal range is imposed."@en .
+
+cx:alignsWithConcept
+    a owl:ObjectProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range skos:Concept ;
+    rdfs:label "aligns with concept"@en ;
+    skos:definition "Relates a dataset to a controlled concept used to classify or semantically align it."@en .
+
+cx:hasAASSubmodel
+    a owl:ObjectProperty ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:label "has AAS submodel"@en ;
+    skos:definition "Relates a dataset to an AAS submodel or submodel descriptor exposed as a catalog-level discovery anchor."@en ;
+    rdfs:comment "No formal range is asserted until a stable canonical RDF class IRI for an AAS Submodel is selected."@en .
