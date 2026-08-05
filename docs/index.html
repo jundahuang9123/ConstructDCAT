@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Construct-DCAT vocabulary documentation">
+  <title>Construct-DCAT vocabulary</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --text: #17202a;
+      --muted: #52606d;
+      --accent: #1557b0;
+      --border: #d7dee7;
+      --note: #eef5ff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101418;
+        --surface: #171c21;
+        --text: #edf2f7;
+        --muted: #aeb9c5;
+        --accent: #8ab4f8;
+        --border: #39434d;
+        --note: #17283f;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    main {
+      width: min(1080px, calc(100% - 2rem));
+      margin: 2rem auto;
+      padding: clamp(1.25rem, 3vw, 3rem);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+    h1, h2 { line-height: 1.2; }
+    h1 { margin: 0; font-size: clamp(2rem, 6vw, 3.4rem); }
+    h2 { margin-top: 2.25rem; }
+    a { color: var(--accent); }
+    code { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; }
+    .lede { color: var(--muted); font-size: 1.15rem; max-width: 70ch; }
+    .metadata {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: .8rem;
+      padding: 0;
+      list-style: none;
+    }
+    .metadata li, .note {
+      padding: .9rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .metadata strong { display: block; }
+    .note { background: var(--note); }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: .75rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+    th { background: var(--bg); }
+    nav ul { display: flex; flex-wrap: wrap; gap: .55rem 1.25rem; padding-left: 1.25rem; }
+    footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Construct-DCAT</h1>
+      <p class="lede">A lightweight vocabulary for representation-independent semantic anchors on DCAT catalog records for heterogeneous construction datasets.</p>
+    </header>
+
+    <ul class="metadata" aria-label="Vocabulary metadata">
+      <li><strong>Version</strong>0.1.0</li>
+      <li><strong>Status</strong>Initial conceptual release</li>
+      <li><strong>Vocabulary IRI</strong><code>https://w3id.org/construct-dcat</code></li>
+      <li><strong>Namespace</strong><code>https://w3id.org/construct-dcat#</code></li>
+      <li><strong>Preferred prefix</strong><code>cx:</code></li>
+      <li><strong>Maintainer</strong><a href="https://orcid.org/0000-0002-1246-5759">Junda Huang</a></li>
+      <li><strong>Contact</strong><a href="mailto:huang@uni-wuppertal.de">huang@uni-wuppertal.de</a></li>
+      <li><strong>License</strong><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></li>
+    </ul>
+
+    <section>
+      <h2>Scope</h2>
+      <p>Construct-DCAT adds a small set of construction-oriented discovery anchors to <code>dcat:Dataset</code> records. It can be used in DCAT and DCAT-AP catalogs, but it is not a complete DCAT-AP profile and defines no SHACL constraints.</p>
+      <p class="note"><strong>Representation independent:</strong> the catalog metadata is RDF, while the underlying distributions may be non-RDF IFC, AAS JSON, tabular, geospatial, sensor, or document data. RDF datasets are supported too.</p>
+      <p>The two dataset classes are initial examples, not an exhaustive taxonomy. Property objects may be IRIs from any suitable ontology, class hierarchy, AAS model, or controlled vocabulary; they are not restricted to a closed list.</p>
+    </section>
+
+    <section>
+      <h2>Relationship to VoID</h2>
+      <p>VoID can describe vocabularies, classes, properties, and partitions occurring within RDF datasets. Construct-DCAT instead exposes representation-independent semantic anchors on DCAT catalog records, including records for non-RDF datasets. RDF datasets may use both vocabularies together.</p>
+    </section>
+
+    <section>
+      <h2>Terms</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Term</th><th>Kind</th><th>Domain or parent</th><th>Range</th><th>Definition</th></tr>
+          </thead>
+          <tbody>
+            <tr id="AASDataset"><td><code>cx:AASDataset</code></td><td>Class</td><td><code>dcat:Dataset</code></td><td>—</td><td>A dataset represented by, or organized around, one or more Asset Administration Shells.</td></tr>
+            <tr id="BIMDataset"><td><code>cx:BIMDataset</code></td><td>Class</td><td><code>dcat:Dataset</code></td><td>—</td><td>A dataset containing building information modeling data.</td></tr>
+            <tr id="describesAssetType"><td><code>cx:describesAssetType</code></td><td>Object property</td><td><code>dcat:Dataset</code></td><td><code>rdfs:Class</code></td><td>The physical asset or building-element type described by the dataset.</td></tr>
+            <tr id="usesOntology"><td><code>cx:usesOntology</code></td><td>Object property</td><td><code>dcat:Dataset</code></td><td>No formal range</td><td>An ontology, vocabulary, or semantic resource used or referenced by the dataset.</td></tr>
+            <tr id="alignsWithConcept"><td><code>cx:alignsWithConcept</code></td><td>Object property</td><td><code>dcat:Dataset</code></td><td><code>skos:Concept</code></td><td>A controlled concept used to classify or semantically align the dataset.</td></tr>
+            <tr id="hasAASSubmodel"><td><code>cx:hasAASSubmodel</code></td><td>Object property</td><td><code>dcat:Dataset</code></td><td>No formal range</td><td>An AAS submodel or descriptor exposed as a catalog-level discovery anchor.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><code>cx:usesOntology</code> may identify OWL ontologies, SKOS concept schemes, or other resolvable semantic resources. <code>cx:hasAASSubmodel</code> has no formal range until a stable canonical RDF class IRI for AAS Submodel is selected.</p>
+    </section>
+
+    <nav aria-label="Vocabulary resources">
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="construct-dcat.ttl">Turtle serialization</a></li>
+        <li><a href="construct-dcat.jsonld">JSON-LD serialization</a></li>
+        <li><a href="https://raw.githubusercontent.com/jundahuang9123/ConstructDCAT/main/examples/example-catalog.ttl">Example catalog</a></li>
+        <li><a href="https://raw.githubusercontent.com/jundahuang9123/ConstructDCAT/main/queries/wall-bot.rq">SPARQL query</a></li>
+        <li><a href="https://github.com/jundahuang9123/ConstructDCAT">GitHub repository</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      Construct-DCAT 0.1.0 · Maintained by Junda Huang · Licensed under CC BY 4.0
+    </footer>
+  </main>
+</body>
+</html>

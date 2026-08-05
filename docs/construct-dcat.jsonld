@@ -1,0 +1,147 @@
+{
+  "@context": {
+    "cx": "https://w3id.org/construct-dcat#",
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "@id": "https://w3id.org/construct-dcat",
+      "@type": "owl:Ontology",
+      "dcterms:title": {
+        "@value": "Construct-DCAT",
+        "@language": "en"
+      },
+      "dcterms:description": {
+        "@value": "A lightweight vocabulary for representation-independent semantic anchors on DCAT catalog records for heterogeneous construction datasets.",
+        "@language": "en"
+      },
+      "dcterms:creator": {
+        "@id": "https://orcid.org/0000-0002-1246-5759"
+      },
+      "dcterms:created": {
+        "@value": "2026-08-05",
+        "@type": "xsd:date"
+      },
+      "dcterms:license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "owl:versionInfo": "0.1.0",
+      "rdfs:seeAlso": {
+        "@id": "https://github.com/jundahuang9123/ConstructDCAT"
+      },
+      "rdfs:comment": {
+        "@value": "Initial conceptual release; the vocabulary is intentionally small and is not a complete DCAT-AP profile.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "cx:AASDataset",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "dcat:Dataset"
+      },
+      "rdfs:label": {
+        "@value": "AAS dataset",
+        "@language": "en"
+      },
+      "skos:definition": {
+        "@value": "A cataloged dataset whose content is represented by, or organized around, one or more Asset Administration Shells.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "cx:BIMDataset",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": {
+        "@id": "dcat:Dataset"
+      },
+      "rdfs:label": {
+        "@value": "BIM dataset",
+        "@language": "en"
+      },
+      "skos:definition": {
+        "@value": "A cataloged dataset containing building information modeling data.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "cx:describesAssetType",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": {
+        "@id": "dcat:Dataset"
+      },
+      "rdfs:range": {
+        "@id": "rdfs:Class"
+      },
+      "rdfs:label": {
+        "@value": "describes asset type",
+        "@language": "en"
+      },
+      "skos:definition": {
+        "@value": "Relates a dataset to the physical asset or building-element type that it describes.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "cx:usesOntology",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": {
+        "@id": "dcat:Dataset"
+      },
+      "rdfs:label": {
+        "@value": "uses ontology",
+        "@language": "en"
+      },
+      "skos:definition": {
+        "@value": "Relates a dataset to an ontology, vocabulary, or semantic resource that it uses or references.",
+        "@language": "en"
+      },
+      "rdfs:comment": {
+        "@value": "Values may identify OWL ontologies, SKOS concept schemes, or other resolvable semantic resources; no narrow formal range is imposed.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "cx:alignsWithConcept",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": {
+        "@id": "dcat:Dataset"
+      },
+      "rdfs:range": {
+        "@id": "skos:Concept"
+      },
+      "rdfs:label": {
+        "@value": "aligns with concept",
+        "@language": "en"
+      },
+      "skos:definition": {
+        "@value": "Relates a dataset to a controlled concept used to classify or semantically align it.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "cx:hasAASSubmodel",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": {
+        "@id": "dcat:Dataset"
+      },
+      "rdfs:label": {
+        "@value": "has AAS submodel",
+        "@language": "en"
+      },
+      "skos:definition": {
+        "@value": "Relates a dataset to an AAS submodel or submodel descriptor exposed as a catalog-level discovery anchor.",
+        "@language": "en"
+      },
+      "rdfs:comment": {
+        "@value": "No formal range is asserted until a stable canonical RDF class IRI for an AAS Submodel is selected.",
+        "@language": "en"
+      }
+    }
+  ]
+}

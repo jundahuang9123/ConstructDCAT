@@ -1,0 +1,14 @@
+PREFIX cx:   <https://w3id.org/construct-dcat#>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ifc:  <https://standards.buildingsmart.org/IFC/DEV/IFC4_3/OWL#>
+PREFIX bot:  <https://w3id.org/bot#>
+
+SELECT ?dataset ?assetType
+WHERE {
+  ?dataset a dcat:Dataset ;
+           cx:describesAssetType ?assetType ;
+           cx:usesOntology bot: .
+
+  ?assetType rdfs:subClassOf* ifc:IfcWall .
+}
